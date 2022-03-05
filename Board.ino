@@ -61,13 +61,10 @@ void loop() {
 		encoderSelection.serialPrintState();
 	}
 
-	if(encoderColor.hasButtonStateChanged()) {
-		if(encoderColor.getButtonState()) {
-			uint8_t colorOfCopied = _cellData.getCellValue(_copiedCell, COLOR_BIT_MASK);
-			_cellData.setCellColor(_selectedCell, colorOfCopied);
-			deferSelectionBlink();
-		}
-		encoderColor.serialPrintState();
+	if(encoderColor.getButtonState()) {
+		uint8_t colorOfCopied = _cellData.getCellValue(_copiedCell, COLOR_BIT_MASK);
+		_cellData.setCellColor(_selectedCell, colorOfCopied);
+		deferSelectionBlink();
 	}
 
 	updateSelectedBlinkInfluence();
