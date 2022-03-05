@@ -4,8 +4,8 @@
 #include "RotaryEncoderWithButton.h"
 
 
-#define SELECTED_BLINK_DELAY 4500
-#define SELECTED_BLINK_DURATION 1500
+#define SELECTED_BLINK_DELAY 2500
+#define SELECTED_BLINK_DURATION 500
 
 uint64_t _currentTime = 0;
 
@@ -13,6 +13,7 @@ uint8_t _selectedCell = 0;
 uint64_t _selectedBlinkStart = 0;
 uint8_t _selectedBlinkInfluence = 0;
 
+uint8_t _copiedCell = 0;
 
 CellData _cellData;
 LedControl _ledControl;
@@ -35,20 +36,37 @@ void setup()
 void loop() {
 	_currentTime = millis();
 
-	if(encoderSelection.tick())
+	encoderSelection.tick();
+	encoderColor.tick();
+
+	if(encoderSelection.hasRotaryPositionChanged())
 	{
 		changeSelected(encoderSelection.getRotaryPosition());
 		uint8_t colorOfSelected = _cellData.getCellValue(_selectedCell, COLOR_BIT_MASK);
 		encoderColor.setRotaryPosition(colorOfSelected);
 		encoderSelection.serialPrintState();
 	}
-
-	if (encoderColor.tick())
+	else if (encoderColor.hasRotaryPositionChanged())
 	{
 		int newColor = encoderColor.getRotaryPosition();
 		_cellData.setCellColor(_selectedCell, newColor);
-		//_ledControl.setCellData(_cellData);
 		deferSelectionBlink();
+		encoderColor.serialPrintState();
+	}
+
+	if(encoderSelection.hasButtonStateChanged()) {
+		if(encoderSelection.getButtonState()) {
+			_copiedCell = _selectedCell;
+		}
+		encoderSelection.serialPrintState();
+	}
+
+	if(encoderColor.hasButtonStateChanged()) {
+		if(encoderColor.getButtonState()) {
+			uint8_t colorOfCopied = _cellData.getCellValue(_copiedCell, COLOR_BIT_MASK);
+			_cellData.setCellColor(_selectedCell, colorOfCopied);
+			deferSelectionBlink();
+		}
 		encoderColor.serialPrintState();
 	}
 
@@ -57,8 +75,6 @@ void loop() {
 	_ledControl.setAllLeds(_selectedCell, _selectedBlinkInfluence);
 
 	FastLED.show();
-
-	//delay(10);
 
 }
 
