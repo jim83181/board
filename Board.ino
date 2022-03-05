@@ -1,6 +1,7 @@
 #include "SharedConstants.h"
 #include "LedControl.h"
 #include "CellData.h"
+#include "RotaryEncoderWithButton.h"
 
 
 #define SELECTED_BLINK_DELAY 4500
@@ -12,12 +13,12 @@ uint8_t _selectedCell = 0;
 uint64_t _selectedBlinkStart = 0;
 uint8_t _selectedBlinkInfluence = 0;
 
-uint64_t _changeTime = 0;
-uint64_t _randomDelay = random(500, 2000);
-
 
 CellData _cellData;
 LedControl _ledControl;
+
+RotaryEncoderWithButton encoderSelection = RotaryEncoderWithButton(PIN_ROTARY_SELECTION_A, PIN_ROTARY_SELECTION_B, PIN_ROTARY_SELECTION_BUTTON, 0, NUM_LEDS - 1);
+RotaryEncoderWithButton encoderColor = RotaryEncoderWithButton(PIN_ROTARY_COLOR_A, PIN_ROTARY_COLOR_B, PIN_ROTARY_COLOR_BUTTON, 0, NUM_OF_COLORS - 1);
 
 void setup()
 {
@@ -28,11 +29,28 @@ void setup()
 		_cellData.setCellColor(i, i % NUM_OF_COLORS);
 	}
 
-	_ledControl.setCellData(_cellData);
+	_ledControl.setCellData(&_cellData);
 }
 
 void loop() {
 	_currentTime = millis();
+
+	if(encoderSelection.tick())
+	{
+		changeSelected(encoderSelection.getRotaryPosition());
+		uint8_t colorOfSelected = _cellData.getCellValue(_selectedCell, COLOR_BIT_MASK);
+		encoderColor.setRotaryPosition(colorOfSelected);
+		encoderSelection.serialPrintState();
+	}
+
+	if (encoderColor.tick())
+	{
+		int newColor = encoderColor.getRotaryPosition();
+		_cellData.setCellColor(_selectedCell, newColor);
+		//_ledControl.setCellData(_cellData);
+		deferSelectionBlink();
+		encoderColor.serialPrintState();
+	}
 
 	updateSelectedBlinkInfluence();
 
@@ -40,13 +58,8 @@ void loop() {
 
 	FastLED.show();
 
-	delay(10);
+	//delay(10);
 
-	if(_currentTime - _changeTime > _randomDelay) {
-		_randomDelay = random(2000, 6000);
-		_changeTime = _currentTime;
-		changeSelected(_selectedCell + 1);
-	}
 }
 
 void updateSelectedBlinkInfluence()
@@ -72,4 +85,8 @@ void changeSelected(uint8_t newSelectedCellIndex) {
 	_selectedCell = newSelectedCellIndex;
 	_selectedCell = _selectedCell % NUM_LEDS;
 	_selectedBlinkStart = _currentTime - (SELECTED_BLINK_DURATION * .25);
+}
+
+void deferSelectionBlink() {
+	_selectedBlinkStart = _currentTime - SELECTED_BLINK_DURATION;
 }

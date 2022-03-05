@@ -9,7 +9,7 @@ LedControl::LedControl()
 	FastLED.addLeds<WS2811, LED_MATRIX_DATA_PIN, RGB>(_leds, NUM_LEDS);
 }
 
-void LedControl::setCellData(CellData cellData) {
+void LedControl::setCellData(CellData* cellData) {
 	_cellData = cellData;
 }
 
@@ -24,13 +24,13 @@ void LedControl::setCellData(CellData cellData) {
 
 void LedControl::setLed(uint8_t cellIndex, uint8_t selectedCellIndex, uint8_t selectedBlinkInfluence)
 {
-	uint8_t colorIndex = _cellData.getCellValue(cellIndex, COLOR_BIT_MASK);
-	Serial.println(colorIndex);
+	uint8_t colorIndex = _cellData->getCellValue(cellIndex, COLOR_BIT_MASK);
+	
 	uint8_t hueValue = colorPalette[colorIndex][0];
 	uint8_t saturationValue = colorPalette[colorIndex][1];
 	uint8_t brightnessValue = colorPalette[colorIndex][2];
 
-	uint8_t brightnessAdjust = _cellData.getCellValue(cellIndex, BRIGHTNESS_BIT_MASK);
+	uint8_t brightnessAdjust = _cellData->getCellValue(cellIndex, BRIGHTNESS_BIT_MASK);
 	brightnessValue = brightnessAdjust * (brightnessValue / 3);
 
 	if (selectedCellIndex == cellIndex)

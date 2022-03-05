@@ -18,11 +18,11 @@ public:
 
 	void setLed(uint8_t cellIndex, uint8_t selectedCellIndex, uint8_t selectedBlinkInfluence);
 
-	void setCellData(CellData cellData);
+	void setCellData(CellData* cellData);
 
 private:
 	CRGB _leds[NUM_LEDS];
-	CellData _cellData;
+	CellData* _cellData;
 };
 
 #endif
