@@ -1,6 +1,7 @@
-#include "Arduino.h"
-#include "CellData.h"
+#include <Arduino.h>
 #include "SharedConstants.h"
+#include "CellData.h"
+
 
 CellData::CellData()
 {

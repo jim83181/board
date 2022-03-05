@@ -1,7 +1,9 @@
-#include "Arduino.h"
+#include <Arduino.h>
 
 #ifndef SHARED_CONSTANTS
 #define SHARED_CONSTANTS
+
+#define LED_MATRIX_DATA_PIN 4
 
 #define NUM_LEDS 16
 

@@ -1,8 +1,7 @@
-#include <SimpleRotary.h>
-
+#include "SharedConstants.h"
 #include "LedControl.h"
 #include "CellData.h"
-#include "SharedConstants.h"
+
 
 #define SELECTED_BLINK_DELAY 4500
 #define SELECTED_BLINK_DURATION 1500

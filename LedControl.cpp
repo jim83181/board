@@ -1,8 +1,8 @@
-#include "LedControl.h"
-
+#include <Arduino.h>
 #include <FastLED.h>
-#include "Arduino.h"
 #include "SharedConstants.h"
+
+#include "LedControl.h"
 
 LedControl::LedControl()
 {

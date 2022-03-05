@@ -1,9 +1,8 @@
+#include <Arduino.h>
+#include "SharedConstants.h"
 
-#include "Arduino.h"
-#include "sharedConstants.h"
-
-#ifndef cellData_h
-#define cellData_h
+#ifndef CELL_DATA_H
+#define CELL_DATA_H
 
 #define COLOR_BIT_MASK 0b11110000
 #define BRIGHTNESS_BIT_MASK 0b00001100
