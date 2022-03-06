@@ -9,7 +9,7 @@ CellData::CellData()
 	// initialize all cellData to bright white
 	for (int i = 0; i < NUM_LEDS; i++)
 	{
-		_cellData[i] = 0b00001100;
+		_cellData[i] = 0b00000100;
 	}
 }
 

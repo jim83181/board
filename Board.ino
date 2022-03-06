@@ -25,13 +25,10 @@ void setup()
 {
 	Serial.begin(19200);
 
-	for (uint8_t i = 0; i < NUM_LEDS; i++)
-	{
-		_cellData.setCellColor(i, i % NUM_OF_COLORS);
-	}
-
 	_ledControl.setCellData(&_cellData);
 }
+
+uint8_t skipFast = 0;
 
 void loop() {
 	_currentTime = millis();
@@ -64,14 +61,20 @@ void loop() {
 	if(encoderColor.getButtonState()) {
 		uint8_t colorOfCopied = _cellData.getCellValue(_copiedCell, COLOR_BIT_MASK);
 		_cellData.setCellColor(_selectedCell, colorOfCopied);
-		deferSelectionBlink();
 	}
 
 	updateSelectedBlinkInfluence();
 
 	_ledControl.setAllLeds(_selectedCell, _selectedBlinkInfluence);
 
-	FastLED.show();
+	skipFast++;
+
+	skipFast = skipFast % 10;
+
+	if(skipFast == 0) {
+		FastLED.show();
+	}
+	
 
 }
 

@@ -22,21 +22,6 @@ RotaryEncoderWithButton::RotaryEncoderWithButton(int rotaryPinA, int rotaryPinB,
 bool RotaryEncoderWithButton::tick() {
 	_encoder->tick();
 
-	// _lastRotaryPosition = _rotaryPosition;
-	// _lastButtonState = _buttonState;
-
-	// _rotaryPosition = _encoder->getPosition();
-	// if(_rotaryPosition < _rotaryMin)
-	// {
-	// 	_rotaryPosition = _rotaryMax;
-	// 	_encoder->setPosition(_rotaryPosition);
-	// }
-	// else if(_rotaryPosition > _rotaryMax)
-	// {
-	// 	_rotaryPosition = _rotaryMin;
-	// 	_encoder->setPosition(_rotaryPosition);
-	// }
-
 	setRotaryPosition(_encoder->getPosition());
 
 	_lastButtonState = _buttonState;
