@@ -15,9 +15,11 @@
 
 const uint16_t NUM_LEDS = 256;
 
-#define NUM_OF_COLORS 12
+#define NUM_OF_COLORS 14
 const int colorPalette[NUM_OF_COLORS][3] = {
-		{255, 0, 0},	 // white
+		{255, 0, 0},		 // off
+		{255, 0, 125},	 // gray
+		{255, 0, 255},	 // white
 		{0, 255, 219},	 // red
 		{8, 255, 232},	 // red-orange
 		{15, 255, 255},	 // orange
