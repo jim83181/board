@@ -12,15 +12,15 @@ class CellData {
 	public:
 		CellData();
 
-		uint8_t getCellValue(uint8_t cellIndex, byte bitMask);
+		uint8_t getCellValue(uint16_t cellIndex, byte bitMask);
 
-		void setCellValue(uint8_t cellIndex, byte bitMask, uint8_t value);
+		void setCellValue(uint16_t cellIndex, byte bitMask, uint8_t value);
 
-		void setCellData(uint8_t cellIndex, uint8_t color, uint8_t brightness);
+		void setCellData(uint16_t cellIndex, uint8_t color, uint8_t brightness);
 
-		void setCellColor(uint8_t cellIndex, uint8_t value);
+		void setCellColor(uint16_t cellIndex, uint8_t value);
 
-		void setCellBrightness(uint8_t cellIndex, uint8_t value);
+		void setCellBrightness(uint16_t cellIndex, uint8_t value);
 
 	private:
 		byte _cellData[NUM_LEDS];

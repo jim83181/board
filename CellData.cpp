@@ -13,7 +13,7 @@ CellData::CellData()
 	}
 }
 
-uint8_t CellData::getCellValue(uint8_t cellIndex, byte bitMask)
+uint8_t CellData::getCellValue(uint16_t cellIndex, byte bitMask)
 {
 	byte b = (byte)_cellData[cellIndex];
 
@@ -28,7 +28,7 @@ uint8_t CellData::getCellValue(uint8_t cellIndex, byte bitMask)
 	return (uint8_t)b;
 }
 
-void CellData::setCellValue(uint8_t cellIndex, byte bitMask, uint8_t value)
+void CellData::setCellValue(uint16_t cellIndex, byte bitMask, uint8_t value)
 {
 	byte b = (byte)value;
 	byte originalBitmask = bitMask;
@@ -47,18 +47,18 @@ void CellData::setCellValue(uint8_t cellIndex, byte bitMask, uint8_t value)
 	_cellData[cellIndex] = newCellData;
 }
 
-void CellData::setCellData(uint8_t cellIndex, uint8_t color, uint8_t brightness)
+void CellData::setCellData(uint16_t cellIndex, uint8_t color, uint8_t brightness)
 {
 	setCellColor(cellIndex, color);
 	setCellBrightness(cellIndex, brightness);
 }
 
-void CellData::setCellColor(uint8_t cellIndex, uint8_t value)
+void CellData::setCellColor(uint16_t cellIndex, uint8_t value)
 {
 	setCellValue(cellIndex, COLOR_BIT_MASK, value);
 }
 
-void CellData::setCellBrightness(uint8_t cellIndex, uint8_t value)
+void CellData::setCellBrightness(uint16_t cellIndex, uint8_t value)
 {
 	setCellValue(cellIndex, BRIGHTNESS_BIT_MASK, value);
 }

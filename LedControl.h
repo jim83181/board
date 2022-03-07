@@ -14,9 +14,9 @@ class LedControl
 {
 public:
 	LedControl();
-	void setAllLeds(uint8_t selectedCellIndex, uint8_t selectedBlinkInfluence);
+	void setAllLeds(uint16_t selectedCellIndex, uint8_t selectedBlinkInfluence);
 
-	void setLed(uint8_t cellIndex, uint8_t selectedCellIndex, uint8_t selectedBlinkInfluence);
+	void setLed(uint16_t cellIndex, uint16_t selectedCellIndex, uint8_t selectedBlinkInfluence);
 
 	void setCellData(CellData* cellData);
 

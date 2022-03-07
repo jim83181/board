@@ -13,7 +13,7 @@
 #define PIN_ROTARY_COLOR_B 10
 #define PIN_ROTARY_COLOR_BUTTON 8
 
-const uint16_t NUM_LEDS = 256;
+const uint16_t NUM_LEDS = 512;
 
 #define NUM_OF_COLORS 14
 const int colorPalette[NUM_OF_COLORS][3] = {

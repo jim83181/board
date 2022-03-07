@@ -14,7 +14,7 @@ void LedControl::setCellData(CellData* cellData) {
 }
 
 		// Push all cellData to LEDs
-		void LedControl::setAllLeds(uint8_t selectedCellIndex, uint8_t selectedBlinkInfluence)
+		void LedControl::setAllLeds(uint16_t selectedCellIndex, uint8_t selectedBlinkInfluence)
 {
 	for (int i = 0; i < NUM_LEDS; i++)
 	{
@@ -22,7 +22,7 @@ void LedControl::setCellData(CellData* cellData) {
 	}
 }
 
-void LedControl::setLed(uint8_t cellIndex, uint8_t selectedCellIndex, uint8_t selectedBlinkInfluence)
+void LedControl::setLed(uint16_t cellIndex, uint16_t selectedCellIndex, uint8_t selectedBlinkInfluence)
 {
 	uint8_t colorIndex = _cellData->getCellValue(cellIndex, COLOR_BIT_MASK);
 	

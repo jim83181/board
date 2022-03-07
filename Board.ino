@@ -9,11 +9,11 @@
 
 uint64_t _currentTime = 0;
 
-uint8_t _selectedCell = 0;
+uint16_t _selectedCell = 0;
 uint64_t _selectedBlinkStart = 0;
 uint8_t _selectedBlinkInfluence = 0;
 
-uint8_t _copiedCell = 0;
+uint16_t _copiedCell = 0;
 
 CellData _cellData;
 LedControl _ledControl;
@@ -97,7 +97,7 @@ void updateSelectedBlinkInfluence()
 	_selectedBlinkInfluence = dMapSin * 255;
 }
 
-void changeSelected(uint8_t newSelectedCellIndex) {
+void changeSelected(uint16_t newSelectedCellIndex) {
 	_selectedCell = newSelectedCellIndex;
 	_selectedCell = _selectedCell % NUM_LEDS;
 	_selectedBlinkStart = _currentTime - (SELECTED_BLINK_DURATION * .25);
