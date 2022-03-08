@@ -13,7 +13,8 @@ class RotaryEncoderWithButton
 				int rotaryPinB,
 				int buttonPin,
 				long rotaryMin,
-				long rotaryMax);
+				long rotaryMax,
+				bool stopOnMinMax);
 
 		bool tick();
 
@@ -43,6 +44,8 @@ class RotaryEncoderWithButton
 
 		long _rotaryMin;
 		long _rotaryMax;
+
+		bool _stopOnMinMax;
 };
 
 #endif

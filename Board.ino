@@ -18,7 +18,7 @@ const float _centerDeadZone = 8.0;
 #define SELECTED_BLINK_DURATION 500
 
 uint64_t _currentTime = 0;
-float _elapsedTime;
+uint64_t _elapsedTime;
 
 uint16_t _selectedCell = 0;
 uint64_t _selectedBlinkStart = 0;
@@ -29,8 +29,11 @@ uint16_t _copiedCell = 0;
 CellData _cellData;
 LedControl _ledControl;
 
-RotaryEncoderWithButton encoderBrightness = RotaryEncoderWithButton(PIN_ROTARY_SELECTION_A, PIN_ROTARY_SELECTION_B, PIN_ROTARY_SELECTION_BUTTON, 0, BRIGHTNESS_MAX - 1);
-RotaryEncoderWithButton encoderColor = RotaryEncoderWithButton(PIN_ROTARY_COLOR_A, PIN_ROTARY_COLOR_B, PIN_ROTARY_COLOR_BUTTON, 0, NUM_OF_COLORS - 1);
+RotaryEncoderWithButton encoderBrightness = RotaryEncoderWithButton(PIN_ROTARY_SELECTION_A, PIN_ROTARY_SELECTION_B, PIN_ROTARY_SELECTION_BUTTON, 0, BRIGHTNESS_MAX - 1, true);
+RotaryEncoderWithButton encoderColor = RotaryEncoderWithButton(PIN_ROTARY_COLOR_A, PIN_ROTARY_COLOR_B, PIN_ROTARY_COLOR_BUTTON, 0, NUM_OF_COLORS - 1, false);
+
+bool _massSelection[NUM_LEDS];
+bool _wasMassSelected = false;
 
 void setup()
 {
@@ -49,7 +52,7 @@ uint8_t skipFast = 0;
 void loop() {
 
 	unsigned long currentTime = millis();
-	_elapsedTime = ((float)currentTime - (float)_currentTime);
+	_elapsedTime = (currentTime - _currentTime);
 	_currentTime = currentTime;
 
 	calculeJoystick();
@@ -80,8 +83,29 @@ void loop() {
 
 	if(encoderColor.getButtonState())
 	{
-		uint8_t colorOfCopied = _cellData.getCellValue(_copiedCell, COLOR_BIT_MASK);
-		_cellData.setCellColor(_selectedCell, colorOfCopied);
+		_cellData.copyCellData(_copiedCell, _selectedCell);
+	}
+
+	if(joystick->isPress())
+	{
+		if(_wasMassSelected == false) {
+			for (uint16_t i = 0; i < NUM_LEDS; i++)
+			{
+				_massSelection[i] = _cellData.doesCellDataMatch(_selectedCell, i);
+			}
+		}
+
+		for (uint16_t i = 0; i < NUM_LEDS; i++) {
+			if(_massSelection[i]) {
+				_cellData.copyCellData(_selectedCell, i);
+			}
+		}
+
+			_wasMassSelected = true;
+	}
+	else
+	{
+		_wasMassSelected = false;
 	}
 
 	updateSelectedBlinkInfluence();

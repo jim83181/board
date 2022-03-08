@@ -22,6 +22,10 @@ class CellData {
 
 		void setCellBrightness(uint16_t cellIndex, uint8_t value);
 
+		void copyCellData(uint16_t cellSourceIndex, uint16_t cellTargetIndex);
+
+		bool doesCellDataMatch(uint16_t cellA, uint16_t cellB);
+
 	private:
 		byte _cellData[NUM_LEDS];
 };

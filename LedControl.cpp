@@ -6,7 +6,7 @@
 
 LedControl::LedControl()
 {
-	FastLED.addLeds<NEOPIXEL, LED_MATRIX_DATA_PIN>(_leds, NUM_LEDS);
+	FastLED.addLeds<WS2811, LED_MATRIX_DATA_PIN, RGB>(_leds, NUM_LEDS);
 }
 
 void LedControl::setCellData(CellData* cellData) {

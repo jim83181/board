@@ -2,7 +2,7 @@
 #include <RotaryEncoder.h>
 #include <Arduino.h>
 
-RotaryEncoderWithButton::RotaryEncoderWithButton(int rotaryPinA, int rotaryPinB, int buttonPin, long rotaryMin, long rotaryMax)
+RotaryEncoderWithButton::RotaryEncoderWithButton(int rotaryPinA, int rotaryPinB, int buttonPin, long rotaryMin, long rotaryMax, bool stopOnMinMax)
 {
 	_buttonPin = buttonPin;
 
@@ -17,6 +17,8 @@ RotaryEncoderWithButton::RotaryEncoderWithButton(int rotaryPinA, int rotaryPinB,
 
 	_rotaryMax = rotaryMax;
 	_rotaryMin = rotaryMin;
+
+	_stopOnMinMax = stopOnMinMax;
 }
 
 bool RotaryEncoderWithButton::tick() {
@@ -61,11 +63,11 @@ void RotaryEncoderWithButton::setRotaryPosition(int newPosition)
 	_rotaryPosition = newPosition;
 	if (_rotaryPosition < _rotaryMin)
 	{
-		_rotaryPosition = _rotaryMax;
+		_rotaryPosition = _stopOnMinMax ? _rotaryMin : _rotaryMax;
 	}
 	else if (_rotaryPosition > _rotaryMax)
 	{
-		_rotaryPosition = _rotaryMin;
+		_rotaryPosition = _stopOnMinMax ? _rotaryMax : _rotaryMin;
 	}
 
 	if (_encoder->getPosition() != _rotaryPosition)

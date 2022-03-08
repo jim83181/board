@@ -62,3 +62,13 @@ void CellData::setCellBrightness(uint16_t cellIndex, uint8_t value)
 {
 	setCellValue(cellIndex, BRIGHTNESS_BIT_MASK, value);
 }
+
+void CellData::copyCellData(uint16_t cellSourceIndex, uint16_t cellTargetIndex)
+{
+	_cellData[cellTargetIndex] = _cellData[cellSourceIndex];
+}
+
+bool CellData::doesCellDataMatch(uint16_t cellA, uint16_t cellB)
+{
+	return _cellData[cellA] == _cellData[cellB];
+}

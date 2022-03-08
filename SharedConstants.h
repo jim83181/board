@@ -15,17 +15,16 @@
 
 #define VRX_PIN A0
 #define VRY_PIN A1
-#define SW_PIN 5
-#define NUM_OF_COLS 32
+#define SW_PIN 52
+#define NUM_OF_COLS 8
 #define NUM_OF_ROWS 8
 
 const float JOYSTICK_RANGE = 10;
 const uint16_t NUM_LEDS = NUM_OF_COLS * NUM_OF_ROWS;
 
 #define BRIGHTNESS_MAX 4
-#define NUM_OF_COLORS 13
+#define NUM_OF_COLORS 12
 const int colorPalette[NUM_OF_COLORS][3] = {
-		{255, 0, 0},		 // off
 		{255, 0, 255},	 // white
 		{0, 255, 219},	 // red
 		{8, 255, 232},	 // red-orange
