@@ -43,3 +43,8 @@ void LedControl::setLed(uint16_t cellIndex, uint16_t selectedCellIndex, uint8_t 
 
 	_leds[cellIndex].setHSV(hueValue, saturationValue, brightnessValue);
 }
+
+void LedControl::pushLedData()
+{
+	FastLED.show();
+}

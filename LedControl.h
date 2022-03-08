@@ -20,6 +20,8 @@ public:
 
 	void setCellData(CellData* cellData);
 
+	void pushLedData();
+
 private:
 	CRGB _leds[NUM_LEDS];
 	CellData* _cellData;
